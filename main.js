@@ -14,6 +14,20 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 
+// Add CORS
+app.use(function (req, res, next) {
+    // Website you wish to allow to connect:
+    var allowedOrigins = ['http://localhost:3000', 'http://example.com', 'https://example.com'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+         res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+});
+
 /**
  * GET route /
  * @returns {string} Homepage.
